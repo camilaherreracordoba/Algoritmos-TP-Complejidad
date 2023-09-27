@@ -122,27 +122,24 @@ int encontrarMaximo(const vector<int>& vector) {
 ### Ejercicio 7
 
 ```cpp
-void Lista::separarContiguosDivisibles()
-{
-    int indice = 1; // 1
-    while (indice < largo) // 1n
-    {
-        Nodo* actual = obtener_nodo(indice); // 1n
-        Nodo* siguiente = obtener_nodo(indice + 1); // 1n
+void separarContiguosDivisibles() {
+        NodoInt* actual = primero; // 1
 
-        if (siguiente != nullptr && actual->obtener_dato() % siguiente->obtener_dato() == 0) // 3n
-        {
-            int division = actual->obtener_dato() / siguiente->obtener_dato(); // 2n
-            alta(division, indice + 1); // 1n
-            indice += 2; // 2n
-        }
-        else
-        {
-            indice++; // 2n
+        while (actual && actual->siguiente) { // 1 n
+            int a = actual->elemento; // 1n
+            int b = actual->siguiente->elemento; // 1n
+
+            if (a % b == 0) { // 1n
+                int cociente = a / b; // 2n
+                NodoInt* nuevoNodo = new NodoInt(cociente); //1n
+                nuevoNodo->siguiente = actual->siguiente; //1n
+                actual->siguiente = nuevoNodo; // 1n
+                actual = actual->siguiente->siguiente; //1n
+            } else {
+                actual = actual->siguiente; // 1n
+            }
         }
     }
-}
 ```
-> T(n) = 1 + n(1 + 1 + 3 + 2 + 1 + 2 + 2)
-
+> T(n) = 1 + n(1+1+1+1+2+1+1+1+1)
 > Complejidad: O(n) (lineal)
